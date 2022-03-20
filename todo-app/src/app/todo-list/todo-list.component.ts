@@ -1,4 +1,6 @@
+import { ToDoItem } from './../core/models/ToDoItem';
 import { Component, OnInit } from '@angular/core';
+import { MoveDirection, TodoItemService } from '../core/service/todo-item.service';
 
 @Component({
   selector: 'app-todo-list',
@@ -7,11 +9,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TodoListComponent implements OnInit {
 
-  historyCount = 0;
+  todoItems: ToDoItem[] = [];
 
-  constructor() { }
+  constructor(public todoItemService: TodoItemService) { }
 
   ngOnInit(): void {
+    this.todoItems = this.todoItemService.todoItems;
+    this.todoItemService.itemList$.subscribe(newItems => this.todoItems = newItems);
+  }
+
+  clickUp(id: string) {
+    this.todoItemService.moveItem(id, MoveDirection.UP);
+  }
+
+  clickDown(id: string) {
+    this.todoItemService.moveItem(id, MoveDirection.DOWN);
+  }
+
+  clickFinished(id: string) {
+    this.todoItemService.removeItem(id);
   }
 
 }

@@ -8,13 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
 
   @Input()
-  showBackButton = false;
-
-  @Input()
   currentTitle = '';
-
-  @Input()
-  showHistoryNav = false;
 
   constructor() { }
 

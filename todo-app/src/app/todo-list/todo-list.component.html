@@ -1,9 +1,12 @@
-<div class="center profile-child">
-  <img class="avatar" src="../../assets/avatar.png">
-  <div class="profile-actions">
-      <button mat-raised-button matBadge="{{historyCount}}"    matBadgeOverlap="true" matBadgeSize="medium" matBadgeColor="accent"
-          color="primary" routerLink="/history">
-          <span>History</span>
-      </button>
+<div class="center">
+  <div *ngFor="let item of todoItems; let first = first;; let last = last;" class="todo-list">
+    <app-todo-list-item
+      [todoItem]="item"
+      [first]="first"
+      [last]="last"
+      (down)="clickDown($event)"
+      (up)="clickUp($event)"
+      (finish)="clickFinished($event)">
+    </app-todo-list-item>
   </div>
 </div>

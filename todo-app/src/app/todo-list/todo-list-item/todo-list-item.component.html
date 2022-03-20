@@ -1,0 +1,10 @@
+<mat-card class="card">
+  <mat-card-subtitle>{{todoItem.message}}</mat-card-subtitle>
+  <mat-card-actions align="end">
+    <button *ngIf="!inEditMode" mat-icon-button color="primary" (click)="down.emit(todoItem.id)"[disabled]="last"><mat-icon>arrow_downward</mat-icon></button>
+    <button *ngIf="!inEditMode" mat-icon-button color="primary" (click)="up.emit(todoItem.id)" [disabled]="first"><mat-icon>arrow_upward</mat-icon></button>
+    <button *ngIf="!inEditMode" mat-icon-button color="primary" (click)="toggleEdit()"><mat-icon>edit</mat-icon></button>
+    <button *ngIf="inEditMode" mat-icon-button color="primary" (click)="toggleEdit()"><mat-icon>check</mat-icon></button>
+    <button *ngIf="!inEditMode" mat-icon-button color="primary" (click)="finish.emit(todoItem.id)"><mat-icon>delete_forever</mat-icon></button>
+  </mat-card-actions>
+</mat-card>
