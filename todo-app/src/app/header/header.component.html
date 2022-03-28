@@ -1,5 +1,5 @@
 <nav class="navbar" [class.mat-elevation-z8]=true>
     <div style="width: 80px;"></div>
     <span class="header" style="padding-left: 8px; color: white;">{{currentTitle}}</span>
-    <button class="button-new" mat-stroked-button color="primary">New</button>
+    <button class="button-new" mat-stroked-button color="primary" (click)="newTodo.emit()">New</button>
 </nav>

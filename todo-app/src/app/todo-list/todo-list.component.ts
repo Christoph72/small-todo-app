@@ -18,6 +18,10 @@ export class TodoListComponent implements OnInit {
     this.todoItemService.itemList$.subscribe(newItems => this.todoItems = newItems);
   }
 
+  updateItem(item: ToDoItem) {
+    this.todoItemService.updateItem(item).then(_ => console.log('Item updated'));
+  }
+
   clickUp(id: string) {
     this.todoItemService.moveItem(id, MoveDirection.UP);
   }

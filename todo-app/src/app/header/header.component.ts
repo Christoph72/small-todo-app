@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -9,6 +9,9 @@ export class HeaderComponent implements OnInit {
 
   @Input()
   currentTitle = '';
+
+  @Output()
+  newTodo = new EventEmitter<void>();
 
   constructor() { }
 

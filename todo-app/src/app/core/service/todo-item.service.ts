@@ -1,6 +1,7 @@
+import { DatabaseService } from './database.service';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { ToDoItem } from '../models/ToDoItem';
+import { ItemStatus, ToDoItem } from '../models/ToDoItem';
 import { UUIDGenerator } from '../util/uuid-helper';
 
 export enum MoveDirection {
@@ -12,37 +13,47 @@ export enum MoveDirection {
 })
 export class TodoItemService {
 
-  todoItems: ToDoItem[] = [
-    {
-      id: UUIDGenerator.generateUUID(),
-      index: 0,
-      message: 'Dies ist die erste Nachticht'
-    },
-    {
-      id: UUIDGenerator.generateUUID(),
-      index: 1,
-      message: 'Dies ist noch eine Nachticht'
-    },
-    {
-      id: UUIDGenerator.generateUUID(),
-      index: 2,
-      message: 'Dies ist eine weitere Nachticht'
-    },
-  ];
+  todoItems: ToDoItem[] = [];
 
   itemList$ = new Subject<ToDoItem[]>();
 
-  constructor() { }
+  constructor(protected databaseService: DatabaseService) { }
+
+  initialize() {
+    this.databaseService.changed$.subscribe(_ => this.databaseService.getAllTodos().then(list => {
+      this.todoItems = list;
+      this.itemList$.next(list);
+    }))
+  }
 
   moveItem(id: string, move: MoveDirection) {
-    const index = this.todoItems.findIndex(item => item.id == id);
+    const index = this.todoItems.findIndex(item => item._id == id);
     const swapIndex = move == MoveDirection.DOWN ? index + 1 : index - 1;
     [ this.todoItems[index], this.todoItems[swapIndex] ] = [ this.todoItems[swapIndex], this.todoItems[index] ]
     this.itemList$.next(this.todoItems);
   }
 
   removeItem(id: string) {
-    this.todoItems = this.todoItems.filter(item => item.id != id);
+    this.todoItems = this.todoItems.filter(item => item._id != id);
+    this.itemList$.next(this.todoItems);
+  }
+
+  updateItem(item: ToDoItem) {
+    return this.databaseService.updateItem(item);
+  }
+
+  newItem() {
+    const newToDo = {
+      _id: UUIDGenerator.generateUUID(),
+      index: -1,
+      message: '',
+      due: new Date().getTime(),
+      status: ItemStatus.NONE
+    } as ToDoItem;
+    this.todoItems = [newToDo, ...this.todoItems];
+    for (let i=0; i<this.todoItems.length;i++) {
+      this.todoItems[i].index = i;
+    }
     this.itemList$.next(this.todoItems);
   }
 }

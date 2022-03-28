@@ -28,13 +28,20 @@ export class TodoListItemComponent implements OnInit {
   @Output()
   finish = new EventEmitter<string>();
 
+  @Output()
+  updated = new EventEmitter<ToDoItem>();
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
   toggleEdit() {
+    console.log('MODEL', JSON.stringify(this.todoItem));
     this.inEditMode = !this.inEditMode;
+    if (!this.inEditMode) {
+      this.updated.emit(this.todoItem);
+    }
   }
 
 }

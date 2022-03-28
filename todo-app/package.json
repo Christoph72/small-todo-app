@@ -4,9 +4,9 @@
   "scripts": {
     "start": "ng serve",
     "build": "ng build",
-    "build-prod": "ng build",
+    "build-prod": "ng build --prod",
     "watch": "ng build --watch --configuration development",
-    "build_and_deploy": "ng build && ./scripts/copy2pi.sh",
+    "build_and_deploy": "ng build --prod && ./scripts/copy2pi.sh",
     "test": "ng test"
   },
   "private": true,
@@ -22,6 +22,9 @@
     "@angular/platform-browser-dynamic": "~13.2.0",
     "@angular/router": "~13.2.0",
     "@angular/service-worker": "^13.2.6",
+    "@types/pouchdb": "^6.4.0",
+    "events": "^3.3.0",
+    "pouchdb": "^7.2.2",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

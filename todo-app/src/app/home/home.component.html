@@ -1,4 +1,5 @@
 <app-header
-  [currentTitle]="header">
+  [currentTitle]="header"
+  (newTodo)="createNewToDo()">
 </app-header>
 <app-todo-list></app-todo-list>
